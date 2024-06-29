@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app_frontend/auth/register.dart';
+import 'package:notes_app_frontend/constants/api_url.dart';
+import 'package:notes_app_frontend/notes/get_notes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -38,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoading = true;
       });
       final response = await Dio().post(
-        'http://192.168.1.2:3000/login',
+        '$baseUrl/login',
         data: {
           'username': username.text,
           'password': password.text,
@@ -49,24 +51,11 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       if (response.statusCode == 200) {
         setAccessToken(response.data['access_token']);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Success'),
-              content: const Text(
-                'Login berhasil',
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            );
-          },
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const GetNotesScreen(),
+          ),
         );
       }
     } catch (e) {

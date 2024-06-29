@@ -1,6 +1,7 @@
 import { login, register } from "../services/auth.js";
 
 export const authController = {
+  //Controller Register
   register: async (req, res, next) => {
     try {
       const result = await register(req.body);
@@ -9,6 +10,8 @@ export const authController = {
       next(error);
     }
   },
+
+  //Controller Login
   login: async (req, res, next) => {
     try {
       const result = await login(req.body);

@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app_frontend/auth/login.dart';
+import 'package:notes_app_frontend/notes/get_notes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
+  Future<bool> _checkToken() async {
+    await Future.delayed(const Duration(seconds: 4));
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('accessToken');
+    return token != null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.delayed(const Duration(seconds: 2)),
+      future: _checkToken(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
@@ -25,7 +34,11 @@ class SplashScreen extends StatelessWidget {
             ),
           );
         } else {
-          return const LoginScreen();
+          if (snapshot.hasData && snapshot.data == true) {
+            return const GetNotesScreen();
+          } else {
+            return const LoginScreen();
+          }
         }
       },
     );

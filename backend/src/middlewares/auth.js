@@ -1,6 +1,7 @@
 import { HttpException } from "./error.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+
 export const authHandler = (req, res, next) => {
   try {
     const token = req.headers.authorization?.substring(7);

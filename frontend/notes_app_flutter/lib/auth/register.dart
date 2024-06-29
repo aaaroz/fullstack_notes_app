@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app_frontend/auth/login.dart';
+import 'package:notes_app_frontend/constants/api_url.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -40,8 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       isLoading = true;
     });
     try {
-      final response =
-          await Dio().post('http://192.168.1.2:3000/register', data: {
+      final response = await Dio().post('$baseUrl/register', data: {
         'username': username.text,
         'fullname': fullname.text,
         'password': password.text,

@@ -4,6 +4,8 @@ import { HttpException } from "../middlewares/error.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { verify } from "argon2";
+
+//Service Register
 export const register = async (request) => {
   const findUser = await prisma.users.findFirst({
     where: {
@@ -32,6 +34,8 @@ export const register = async (request) => {
     user,
   };
 };
+
+//Service Login
 export const login = async (request) => {
   const user = await prisma.users.findUnique({
     where: {

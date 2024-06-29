@@ -1,5 +1,7 @@
 import { prisma } from "../applications/database.js";
 import { HttpException } from "../middlewares/error.js";
+
+//Service createNote
 export const createNote = async (userId, request) => {
   const note = await prisma.notes.create({
     data: {
@@ -10,6 +12,8 @@ export const createNote = async (userId, request) => {
   });
   return note;
 };
+
+//Service getNotes
 export const getNotes = async (userId, page = 1, limit = 5) => {
   const notes = await prisma.notes.findMany({
     where: {
@@ -38,6 +42,8 @@ export const getNotes = async (userId, page = 1, limit = 5) => {
     },
   };
 };
+
+//Service getNote
 export const getNote = async (userId, noteId) => {
   const note = await prisma.notes.findFirst({
     where: {
@@ -50,6 +56,8 @@ export const getNote = async (userId, noteId) => {
   }
   return note;
 };
+
+//Service updateNote
 export const updateNote = async (userId, noteId, request) => {
   const note = await prisma.notes.update({
     where: {
@@ -66,6 +74,8 @@ export const updateNote = async (userId, noteId, request) => {
   }
   return note;
 };
+
+//Service deleteNote
 export const deleteNote = async (userId, noteId) => {
   const findNote = await prisma.notes.findFirst({
     where: {
